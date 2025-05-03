@@ -18,6 +18,46 @@ const allowed = [
 
 champ.focus();
 
+
+class CalcHistory {
+    static STORAGE_KEY = 'calcHistory';
+  
+    static getHistory() {
+      const raw = localStorage.getItem(this.STORAGE_KEY);
+      if (!raw) return [];
+      try {
+        return JSON.parse(raw);
+      } catch (err) {
+        console.error('Erreur de parsing du history:', err);
+        // en cas de données corrompues, on remet à zéro
+        this.clearHistory();
+        return [];
+      }
+    }
+  
+    static addOperation(expression, result) {
+      const history = this.getHistory();
+      const op = {
+        expression,
+        result,
+        timestamp: new Date().toISOString()
+      };
+      history.push(op);
+      try {
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(history));
+      } catch (err) {
+        console.error('Impossible de sauvegarder l’historique:', err);
+      }
+    }
+    static clearHistory() {
+      localStorage.removeItem(this.STORAGE_KEY);
+    }
+}
+
+const History = CalcHistory;
+
+
+
 for (let i = 0; i < btns.length; i++) {
     const btn = btns[i];
     const value = btn.dataset.value;
@@ -68,6 +108,11 @@ clearBtn.addEventListener('click', () => {
 
 button.addEventListener('click', () => {
     let champContain = champ.value.trim();
+    //Verifier si le champ est vide
+    if (champContain === '') {
+        displayResult.value = '0';
+        return;
+    }
     try {
 
         // Check if the input contains only allowed characters
@@ -78,6 +123,8 @@ button.addEventListener('click', () => {
         }
         let result = eval(champContain);
         displayResult.value =  "=" + result;
+        // Save the operation in history
+        History.addOperation(champContain, result);
     } catch (error) {
         console.log(error);
     }
