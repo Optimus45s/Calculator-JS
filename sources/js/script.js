@@ -7,13 +7,6 @@ let clearBtn = document.getElementById('clear-btn');
 
 const allButton = {};
 
-for (let i = 0; i < btns.length; i++) {
-    const btn = btns[i];
-    const value = btn.dataset.value;
-    allButton[value] = btn;
-}
-
-
 
 const hoverClasses = ['scale-95', 'shadow-inner', 'bg-white/40', 'shadow-sm'];
 
@@ -22,6 +15,14 @@ const allowed = [
     '+', '-', '*', '/', '(', ')', '.', ' ',
 
 ]
+
+champ.focus();
+
+for (let i = 0; i < btns.length; i++) {
+    const btn = btns[i];
+    const value = btn.dataset.value;
+    if (allowed.includes(value)) allButton[value] = btn;
+}
 
 btns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -41,6 +42,10 @@ champ.addEventListener('input', e => {
 
 champ.addEventListener('keydown', e => {
     const ctrlKeys = ['Backspace','Enter','ArrowLeft','ArrowRight','Delete','Tab'];
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        button.click();
+    }
     if (allButton.hasOwnProperty(e.key)) {
         const btn = allButton[e.key];
         btn.classList.add(...hoverClasses);
@@ -68,7 +73,7 @@ button.addEventListener('click', () => {
         // Check if the input contains only allowed characters
         for (let i = 0; i < champContain.length; i++) {
             if (!allowed.includes(champContain[i])) {
-                throw new Error('Invalid character in input');
+                return;
             }
         }
         let result = eval(champContain);
