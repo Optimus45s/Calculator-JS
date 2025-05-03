@@ -5,6 +5,18 @@ let champ = document.getElementById('champ');
 const btns = document.querySelectorAll('.calc-btn');
 let clearBtn = document.getElementById('clear-btn');
 
+const allButton = {};
+
+for (let i = 0; i < btns.length; i++) {
+    const btn = btns[i];
+    const value = btn.dataset.value;
+    allButton[value] = btn;
+}
+
+
+
+const hoverClasses = ['scale-95', 'shadow-inner', 'bg-white/40', 'shadow-sm'];
+
 const allowed = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     '+', '-', '*', '/', '(', ')', '.', ' ',
@@ -29,6 +41,13 @@ champ.addEventListener('input', e => {
 
 champ.addEventListener('keydown', e => {
     const ctrlKeys = ['Backspace','Enter','ArrowLeft','ArrowRight','Delete','Tab'];
+    if (allButton.hasOwnProperty(e.key)) {
+        const btn = allButton[e.key];
+        btn.classList.add(...hoverClasses);
+        setTimeout(() => {
+            btn.classList.remove(...hoverClasses);
+        }, 200);
+    }
     if (ctrlKeys.includes(e.key)) return;
     if (!allowed.includes(e.key)) {
       e.preventDefault();
@@ -53,7 +72,7 @@ button.addEventListener('click', () => {
             }
         }
         let result = eval(champContain);
-        displayResult.value = result;
+        displayResult.value =  "=" + result;
     } catch (error) {
         console.log(error);
     }
