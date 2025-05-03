@@ -2,12 +2,22 @@
 let button = document.getElementById('operate');
 let displayResult = document.getElementById('resultDisplay');
 let champ = document.getElementById('champ');
+const btns = document.querySelectorAll('.calc-btn');
+let clearBtn = document.getElementById('clear-btn');
 
 const allowed = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     '+', '-', '*', '/', '(', ')', '.', ' ',
 
 ]
+
+btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const char = btn.dataset.value;
+      champ.value += char
+      champ.focus();
+    });
+});
 
 champ.addEventListener('input', e => {
     const v = e.target.value;
@@ -24,6 +34,12 @@ champ.addEventListener('keydown', e => {
       e.preventDefault();
     }
 });
+
+clearBtn.addEventListener('click', () => {
+    champ.value = '';
+    displayResult.value = '0';
+});
+
 
 
 button.addEventListener('click', () => {
