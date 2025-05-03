@@ -1,5 +1,5 @@
 
-let button = document.getElementById('button');
+let button = document.getElementById('operate');
 let displayResult = document.getElementById('resultDisplay');
 let champ = document.getElementById('champ');
 
@@ -8,6 +8,22 @@ const allowed = [
     '+', '-', '*', '/', '(', ')', '.', ' ',
 
 ]
+
+champ.addEventListener('input', e => {
+    const v = e.target.value;
+    const filtered = [...v].filter(ch => allowed.includes(ch)).join('');
+    if (filtered !== v) {
+      e.target.value = filtered;
+    }
+});
+
+champ.addEventListener('keydown', e => {
+    const ctrlKeys = ['Backspace','Enter','ArrowLeft','ArrowRight','Delete','Tab'];
+    if (ctrlKeys.includes(e.key)) return;
+    if (!allowed.includes(e.key)) {
+      e.preventDefault();
+    }
+});
 
 
 button.addEventListener('click', () => {
@@ -21,7 +37,7 @@ button.addEventListener('click', () => {
             }
         }
         let result = eval(champContain);
-        displayResult.innerText = result;
+        displayResult.value = result;
     } catch (error) {
         console.log(error);
     }

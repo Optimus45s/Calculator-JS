@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Glass Calculator</title>
+  <title>Calcultor-JS</title>
   <!-- Tailwind CSS en CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -14,10 +14,10 @@
     <div class="w-80 md:w-96 lg:w-[30rem] p-6 md:p-8 rounded-3xl bg-white/30 backdrop-blur-xl shadow-xl">
       <!-- Affichage -->
     <div class="h-16 md:h-20  bg-white/50 backdrop-blur-sm rounded-t-xl flex items-center justify-end px-4 md:px-6">
-      <input type="text" value="0"  class="w-full bg-transparent text-left outline-none text-3xl md:text-4xl font-medium text-gray-900">
+      <input type="text" autocomplete="off" placeholder="0" value="" id="champ" class="w-full bg-transparent text-left outline-none text-3xl md:text-4xl font-medium text-gray-900">
     </div>
     <div class="h-8 md:h-12 mb-6 md:mb-8 bg-white/50 backdrop-blur-sm rounded-b-xl flex items-center justify-end px-4 md:px-6">
-        <input type="text" value="0" readonly class="w-full bg-transparent text-right outline-none text-2xl md:text-3xl font-medium text-gray-500">
+        <input type="text" value="0" id="resultDisplay" readonly class="w-full bg-transparent text-right outline-none text-2xl md:text-3xl font-medium text-gray-500">
     </div>
 
 
@@ -54,11 +54,12 @@
         <!-- Ligne 5 -->
         <button class="h-12 md:h-16 flex items-center justify-center bg-white/40 backdrop-blur-sm rounded-lg text-lg md:text-2xl text-gray-800 transition-transform transition-shadow duration-150 ease-out active:scale-95 active:shadow-inner hover:bg-white/40 hover:shadow-sm">0</button>
         <button class="h-12 md:h-16 flex items-center justify-center bg-white/40 backdrop-blur-sm rounded-lg text-lg md:text-2xl text-gray-800 transition-transform transition-shadow duration-150 ease-out active:scale-95 active:shadow-inner hover:bg-white/40 hover:shadow-sm">.</button>
-        <button class="col-span-2 flex items-center justify-center bg-gradient-to-b from-[#74b9ff] to-blue-300 backdrop-blur-sm rounded-lg text-3xl md:text-4xl text-white transition-transform transition-shadow duration-150 ease-out active:scale-95 active:shadow-inner hover:shadow-sm">=</button>
+        <button id="operate" class="col-span-2 flex items-center justify-center bg-gradient-to-b from-[#74b9ff] to-blue-300 backdrop-blur-sm rounded-lg text-3xl md:text-4xl text-white transition-transform transition-shadow duration-150 ease-out active:scale-95 active:shadow-inner hover:shadow-sm">=</button>
         <div></div>
         <div></div>
       </div>
     </div>
   </div>
+  <script src="/sources/js/script.js"></script>
 </body>
 </html>
