@@ -38,7 +38,7 @@ calculator-js/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/calculator-js.git
+git clone https://github.com/Optimus45s/calculator-js.git
 ```
 
 2. Open `index.html` in your web browser.
