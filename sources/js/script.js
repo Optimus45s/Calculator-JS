@@ -7,6 +7,7 @@ const historyBtn = document.getElementById('history-btn');
 const historyList = document.getElementById('history-list');
 const historyContainer = document.getElementById('history-container');
 const historyCloseBtn = document.getElementById('history-close-btn');
+const clearHistoryBtn = document.getElementById('clear-history-btn');
 
 
 const allButton = {};
@@ -165,6 +166,9 @@ button.addEventListener('click', () => {
             }
         }
         let result = eval(champContain);
+        if (typeof result === 'number' && !Number.isInteger(result)) {
+            result = parseFloat(result.toFixed(2));
+        }
         displayResult.value =  "=" + result;
         // Save the operation in history and update display
         History.addOperation(champContain, result);
@@ -186,4 +190,10 @@ historyBtn.addEventListener('click', () => {
 historyCloseBtn.addEventListener('click', () => {
     historyContainer.classList.remove('z-50');
     historyContainer.classList.toggle('hidden');
+});
+
+clearHistoryBtn.addEventListener('click', () => {
+    History.clearHistory();
+    historyList.innerHTML = ''; // Clear existing history display
+    champ.focus();
 });
