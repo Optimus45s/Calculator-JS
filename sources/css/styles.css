@@ -14,3 +14,7 @@
     scrollbar-width: thin;
     scrollbar-color: #7ca0cb #e0f2fe;
 }
+
+body{
+    font-family: math, monospace, sans-serif;
+}
