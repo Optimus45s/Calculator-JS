@@ -146,7 +146,7 @@ function addOperationToDisplay(op) {
 }
 
 
-historyList.innerHTML = ''; // Clear existing history display
+historyList.innerHTML = ''; 
 History.getHistory().reverse().forEach(op => {
   addOperationToDisplay(op);
 });
@@ -170,7 +170,6 @@ button.addEventListener('click', () => {
             result = parseFloat(result.toFixed(2));
         }
         displayResult.value =  "=" + result;
-        // Save the operation in history and update display
         History.addOperation(champContain, result);
         addOperationToDisplay({
           expression: champContain,
