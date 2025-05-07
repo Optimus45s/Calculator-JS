@@ -1,9 +1,13 @@
-
 let button = document.getElementById('operate');
 let displayResult = document.getElementById('resultDisplay');
 let champ = document.getElementById('champ');
 const btns = document.querySelectorAll('.calc-btn');
 let clearBtn = document.getElementById('clear-btn');
+const historyBtn = document.getElementById('history-btn');
+const historyList = document.getElementById('history-list');
+const historyContainer = document.getElementById('history-container');
+const historyCloseBtn = document.getElementById('history-close-btn');
+
 
 const allButton = {};
 
@@ -104,7 +108,47 @@ clearBtn.addEventListener('click', () => {
     displayResult.value = '0';
 });
 
+function addOperationToDisplay(op) {
+  const li = document.createElement('li');
+  const spanTime = document.createElement('span');
+  const divResult = document.createElement('div');
+  const spanExpression = document.createElement('span');
+  const spanResult = document.createElement('span');
 
+
+  spanResult.className = 'font-semibold text-2xl';
+  li.className = 'flex flex-col text-gray-600';
+  spanExpression.className = 'font-medium text-2xl';
+  divResult.className = 'flex justify-between ml-2 bg-blue-300/20 backdrop-blur-sm rounded-lg p-2';
+  spanTime.className = 'text-gray-400 text-md self-start mb-1';
+
+  const date = new Date(op.timestamp);
+  const formattedDate = date.toLocaleString('fr-FR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+
+  spanTime.innerText = formattedDate;
+  spanExpression.innerText = op.expression;
+  spanResult.innerText = op.result;
+
+  li.appendChild(spanTime);
+  divResult.appendChild(spanExpression);
+  divResult.appendChild(spanResult);
+  li.appendChild(divResult);
+
+  historyList.insertBefore(li, historyList.firstChild);
+}
+
+
+historyList.innerHTML = ''; // Clear existing history display
+History.getHistory().reverse().forEach(op => {
+  addOperationToDisplay(op);
+});
 
 button.addEventListener('click', () => {
     let champContain = champ.value.trim();
@@ -114,7 +158,6 @@ button.addEventListener('click', () => {
         return;
     }
     try {
-
         // Check if the input contains only allowed characters
         for (let i = 0; i < champContain.length; i++) {
             if (!allowed.includes(champContain[i])) {
@@ -123,10 +166,24 @@ button.addEventListener('click', () => {
         }
         let result = eval(champContain);
         displayResult.value =  "=" + result;
-        // Save the operation in history
+        // Save the operation in history and update display
         History.addOperation(champContain, result);
+        addOperationToDisplay({
+          expression: champContain,
+          result: result,
+          timestamp: new Date().toISOString()
+        });
     } catch (error) {
         console.log(error);
     }
-    
-})
+});
+
+historyBtn.addEventListener('click', () => {
+    historyContainer.classList.toggle('z-50');
+    historyContainer.classList.toggle('hidden');
+});
+
+historyCloseBtn.addEventListener('click', () => {
+    historyContainer.classList.remove('z-50');
+    historyContainer.classList.toggle('hidden');
+});
