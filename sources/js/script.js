@@ -177,7 +177,8 @@ button.addEventListener('click', () => {
           timestamp: new Date().toISOString()
         });
     } catch (error) {
-        console.log(error);
+        console.log("Il y a une erreur dans l'expression");
+        displayResult.value = 'Erreur';
     }
 });
 
